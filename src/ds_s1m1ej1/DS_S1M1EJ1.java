@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package ds_s1m1ej1;
+import java.util.Observable;
 
 /**
  *
@@ -16,6 +17,16 @@ public class DS_S1M1EJ1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        TermometroObservable termometro = new TermometroObservable(15);
+        
+        GraficaTemperatura gr = new GraficaTemperatura(termometro);
+        
+        //GraficaTemperatura se suscribe como observador
+        termometro.addObserver(gr);
+        
+        
+        new Thread(termometro).start();
     }
     
 }

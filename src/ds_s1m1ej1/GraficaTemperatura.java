@@ -13,10 +13,17 @@ import java.util.Observer;
  * @author antonio
  */
 public class GraficaTemperatura implements Observer{
-    private TermometroObservable termometroObservable;
+    private TermometroObservable termometro=null;
+    
+    public GraficaTemperatura(TermometroObservable term){
+        this.termometro=term;
+    }
     
     @Override
     public void update(Observable o, Object arg){
-        //termometroObservable.setTemperatura();
+        if(o==termometro){
+            System.out.println("el valor de temp es: "+termometro.getTemperatura());
+        }
+        
     }
 }
