@@ -16,6 +16,10 @@ import java.util.Random;
  */
 public class TermometroObservable extends Observable implements Runnable{
     private float temperatura;
+    
+    public TermometroObservable(TermometroObservable t){
+        this.temperatura = t.temperatura;
+    }
 
     public TermometroObservable(float temp){
         this.temperatura = temp;

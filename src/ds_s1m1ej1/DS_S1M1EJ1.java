@@ -5,7 +5,7 @@
  */
 package ds_s1m1ej1;
 import java.util.Observable;
-
+import GUI.*;
 /**
  *
  * @author antonio
@@ -20,13 +20,18 @@ public class DS_S1M1EJ1 {
         
         TermometroObservable termometro = new TermometroObservable(15);
         
-        GraficaTemperatura gr = new GraficaTemperatura(termometro);
+        MainWindow gui = new MainWindow();
+        gui.setVisible(true);
+        GraficaTemperatura gr = new GraficaTemperatura(gui);
         
         //GraficaTemperatura se suscribe como observador
         termometro.addObserver(gr);
         
         
+        
+        
         new Thread(termometro).start();
+        
     }
     
 }

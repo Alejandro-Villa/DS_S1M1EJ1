@@ -7,6 +7,7 @@ package ds_s1m1ej1;
 
 import java.util.Observable;
 import java.util.Observer;
+import GUI.*;
 
 /**
  *
@@ -14,15 +15,31 @@ import java.util.Observer;
  */
 public class GraficaTemperatura implements Observer{
     private TermometroObservable termometro=null;
+    MainWindow gui = null;
     
-    public GraficaTemperatura(TermometroObservable term){
-        this.termometro=term;
+    public GraficaTemperatura(MainWindow g){
+        this.gui=g;
+    }
+    
+    public float getTemperatura(){
+        return termometro.getTemperatura();
     }
     
     @Override
     public void update(Observable o, Object arg){
-        if(o==termometro){
-            System.out.println("el valor de temp es: "+termometro.getTemperatura());
+        //if(o==termometro){
+        //    System.out.println("el valor de temp es: "+termometro.getTemperatura());
+        //}
+        //System.out.println((TermometroObservable) o);
+        if(o instanceof TermometroObservable){
+            termometro = new TermometroObservable((TermometroObservable)o);
+            System.out.println(termometro.getTemperatura());
+            
+            
+            
+            gui.updateView(this);
+        
+            
         }
         
     }
