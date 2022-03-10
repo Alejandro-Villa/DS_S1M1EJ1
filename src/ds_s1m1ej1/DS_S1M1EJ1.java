@@ -20,16 +20,18 @@ public class DS_S1M1EJ1 {
         
         TermometroObservable termometro = new TermometroObservable(15);
         
-        MainWindow gui = new MainWindow();
+        MainWindow gui = new MainWindow(termometro);
         gui.setVisible(true);
         GraficaTemperatura gr = new GraficaTemperatura(gui);
         PantallaTemperatura pt = new PantallaTemperatura(termometro, gui);
+        BotonCambio bt = new BotonCambio(termometro,gui);
         
         //GraficaTemperatura se suscribe como observador
         termometro.addObserver(gr);
         
         new Thread(termometro).start();
         new Thread(pt).start();
+        new Thread(bt).start();
         
     }
     
