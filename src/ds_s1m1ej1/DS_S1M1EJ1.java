@@ -23,14 +23,13 @@ public class DS_S1M1EJ1 {
         MainWindow gui = new MainWindow();
         gui.setVisible(true);
         GraficaTemperatura gr = new GraficaTemperatura(gui);
+        PantallaTemperatura pt = new PantallaTemperatura(termometro, gui);
         
         //GraficaTemperatura se suscribe como observador
         termometro.addObserver(gr);
         
-        
-        
-        
         new Thread(termometro).start();
+        new Thread(pt).start();
         
     }
     

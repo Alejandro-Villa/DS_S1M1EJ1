@@ -35,13 +35,8 @@ public class GraficaTemperatura implements Observer{
         //System.out.println((TermometroObservable) o);
         if(o instanceof TermometroObservable){
             termometro = new TermometroObservable((TermometroObservable)o);
-            System.out.println(termometro.getTemperatura());
-            
-            
-            
-            gui.updateView(this);
-        
-            
+            System.out.println("Grafica ultimo dato: " + termometro.getTemperatura());
+            gui.updateGrafica(this);                   
         }
         
     }
