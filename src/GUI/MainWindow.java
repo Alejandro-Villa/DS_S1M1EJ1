@@ -5,6 +5,7 @@
  */
 package GUI;
 import ds_s1m1ej1.GraficaTemperatura;
+import ds_s1m1ej1.PantallaTemperatura;
 /**
  *
  * @author antonio
@@ -109,8 +110,13 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
     
-    public void updateView(GraficaTemperatura gr){
-        temp.setText(""+gr.getTemperatura());
+    public void updatePantalla(PantallaTemperatura pt){
+        temp.setText(""+ pt.getNuevaTemperatura() );
+        repaint();
+        revalidate();
+    }
+    
+    public void updateGrafica(GraficaTemperatura gr){
         repaint();
         revalidate();
     }
