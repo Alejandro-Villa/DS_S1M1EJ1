@@ -52,7 +52,7 @@ public class GraficaTemperatura implements Observer{
                 temps.add(termometro.getTemperatura());
             }
             
-            System.out.println("Grafica ultimo dato: " + termometro.getTemperatura());
+//            System.out.println("Grafica ultimo dato: " + termometro.getTemperatura());
             gui.updateGrafica(this);                   
         }
         

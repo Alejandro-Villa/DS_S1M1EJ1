@@ -28,7 +28,7 @@ public class PantallaTemperatura implements Runnable { // Habia errata aqui
         float temp_nueva = t.getTemperatura();
         if(temp_nueva != temp_actual) {
             temp_actual = temp_nueva;
-            System.out.println("Pantalla Temperatura:" + temp_actual);
+//            System.out.println("Pantalla Temperatura:" + temp_actual);
             w.updatePantalla(this);
         }
         

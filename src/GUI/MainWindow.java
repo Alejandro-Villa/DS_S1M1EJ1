@@ -8,9 +8,20 @@ import ds_s1m1ej1.GraficaTemperatura;
 import ds_s1m1ej1.PantallaTemperatura;
 import ds_s1m1ej1.BotonCambio;
 import ds_s1m1ej1.TermometroObservable;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Random;
 import org.jfree.chart.*;
+import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 /**
  *
  * @author antonio
@@ -53,9 +64,10 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(temp, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(temp)
+                .addGap(43, 43, 43))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,10 +122,10 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonCambio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonCambio, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jPanelGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -201,16 +213,68 @@ public class MainWindow extends javax.swing.JFrame {
         revalidate();
     }
     
-    public void updateGrafica(GraficaTemperatura gr){
-        Grafica graf = new Grafica(gr.getTemperaturas());
-        ChartPanel CP = new ChartPanel(graf.createChart());
-        jPanelGrafica.add(CP,BorderLayout.CENTER);
+    public void generarGrafica(ArrayList<Float> temp){
+        
+        jPanelGrafica.removeAll();
+        
+        XYSeries series = new XYSeries("");
+        for(int i=0; i<temp.size(); i++){
+            series.add(i+1, temp.get(i));
+        }
+//        series.add(18, 567);
+//        series.add(20, 612);
+//        series.add(25, 800);
+//        series.add(30, 980);
+//        series.add(40, 1410);
+//        series.add(50, 2350);
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "",
+                "Dias de la semana",
+                "Temperatura",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+        
+        XYPlot plot = chart.getXYPlot();
+
+        var renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesPaint(0, Color.RED);
+        renderer.setSeriesStroke(0, new BasicStroke(2.0f));
+
+        plot.setRenderer(renderer);
+        plot.setBackgroundPaint(Color.white);
+
+        plot.setRangeGridlinesVisible(true);
+        plot.setRangeGridlinePaint(Color.BLACK);
+
+        plot.setDomainGridlinesVisible(true);
+        plot.setDomainGridlinePaint(Color.BLACK);
+
+        chart.getLegend().setFrame(BlockBorder.NONE);
+
+        chart.setTitle(new TextTitle("Temperaturas de la Semana",
+                        new Font("Serif", java.awt.Font.BOLD, 18)
+                )
+        );
+        
+        // Mostramos la grafica dentro del jPanel1
+        ChartPanel panel = new ChartPanel(chart);        
+        jPanelGrafica.setLayout(new java.awt.BorderLayout());
+        jPanelGrafica.add(panel);   
         jPanelGrafica.validate();
-        jPanelGrafica.setBounds(47, 59, 921, 439);
         
-        jPanelGrafica.setLayout(new BorderLayout(0, 0));
-//        jPanelGrafica.add(graf.createChart());
         
+    }
+    
+    public void updateGrafica(GraficaTemperatura gr){
+        generarGrafica(gr.getTemperaturas());
         repaint();
         revalidate();
     }
