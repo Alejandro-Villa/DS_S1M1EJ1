@@ -24,14 +24,15 @@ public class DS_S1M1EJ1 {
         gui.setVisible(true);
         GraficaTemperatura gr = new GraficaTemperatura(gui);
         PantallaTemperatura pt = new PantallaTemperatura(termometro, gui);
-        BotonCambio bt = new BotonCambio(termometro,gui);
+        //Observador adicional (suscrito)
+        BotonCambio bt = new BotonCambio(gui);
         
-        //GraficaTemperatura se suscribe como observador
+        //GraficaTemperatura y BotonCambio se suscriben como observadores
         termometro.addObserver(gr);
+        termometro.addObserver(bt);
         
         new Thread(termometro).start();
         new Thread(pt).start();
-        new Thread(bt).start();
         
     }
     

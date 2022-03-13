@@ -14,31 +14,37 @@ import java.util.logging.Logger;
 public class PantallaTemperatura implements Runnable { // Habia errata aqui
     private final TermometroObservable t;
     private MainWindow w;
-    float temp_actual;
+    float temp_actual_gr;
     
     // Constructor, se copia referencia al observable y se inica temp
     public PantallaTemperatura(TermometroObservable termometro, MainWindow w){
         t = termometro;
-        temp_actual = t.getTemperatura();
+        temp_actual_gr = t.getTemperatura();
         this.w = w;
     }
     
     // Se pide temp al observable y si cambia se actualiza
-    public float getNuevaTemperatura() {
+    public void actualizarTemp() {
         float temp_nueva = t.getTemperatura();
-        if(temp_nueva != temp_actual) {
-            temp_actual = temp_nueva;
+        if(temp_nueva != temp_actual_gr) {
+            temp_actual_gr = temp_nueva;
 //            System.out.println("Pantalla Temperatura:" + temp_actual);
             w.updatePantalla(this);
         }
-        
-        return temp_actual;
+    }
+    
+    public float getTemperatura(){
+        return temp_actual_gr;
+    }
+    
+    public float getTemperaturaF(){
+        return (float) (temp_actual_gr*1.8+32);
     }
 
     @Override
     public void run() {
         while(true) {
-            getNuevaTemperatura();
+            actualizarTemp();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {

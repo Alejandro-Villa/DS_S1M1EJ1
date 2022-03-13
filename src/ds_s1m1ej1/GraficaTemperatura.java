@@ -41,8 +41,6 @@ public class GraficaTemperatura implements Observer{
         //}
         //System.out.println((TermometroObservable) o);
         if(o instanceof TermometroObservable){
-            
-            
             termometro = new TermometroObservable((TermometroObservable)o);
             
             if(temps.size()<7){
