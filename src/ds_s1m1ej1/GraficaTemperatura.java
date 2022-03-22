@@ -8,6 +8,7 @@ package ds_s1m1ej1;
 import java.util.Observable;
 import java.util.Observer;
 import GUI.*;
+import java.util.ArrayList;
 
 
 
@@ -18,6 +19,8 @@ import GUI.*;
 public class GraficaTemperatura implements Observer{
     private TermometroObservable termometro=null;
     MainWindow gui = null;
+    ArrayList<Float> temps = new ArrayList<Float>();
+    
     
     public GraficaTemperatura(MainWindow g){
         this.gui=g;
@@ -25,6 +28,10 @@ public class GraficaTemperatura implements Observer{
     
     public float getTemperatura(){
         return termometro.getTemperatura();
+    }
+    
+    public ArrayList<Float> getTemperaturas(){
+        return  new ArrayList<Float>(temps);
     }
     
     @Override
@@ -35,13 +42,16 @@ public class GraficaTemperatura implements Observer{
         //System.out.println((TermometroObservable) o);
         if(o instanceof TermometroObservable){
             termometro = new TermometroObservable((TermometroObservable)o);
-            System.out.println(termometro.getTemperatura());
             
+            if(temps.size()<7){
+                temps.add(termometro.getTemperatura());
+            }else{
+                temps.remove(0);
+                temps.add(termometro.getTemperatura());
+            }
             
-            
-            gui.updateView(this);
-        
-            
+//            System.out.println("Grafica ultimo dato: " + termometro.getTemperatura());
+            gui.updateGrafica(this);                   
         }
         
     }

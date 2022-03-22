@@ -62,7 +62,7 @@ public class TermometroObservable extends Observable implements Runnable{
                         }
                     }
                 }
-                Thread.sleep(1000);
+                Thread.sleep(4000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TermometroObservable.class.getName()).log(Level.SEVERE, null, ex);
             }
